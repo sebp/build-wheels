@@ -17,15 +17,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          path: main
-
-      - uses: actions/checkout@v2
-        with:
           repository: sebp/scikit-survival
           ref: ${{ matrix.version }}
           fetch-depth: 0
           submodules: true
-          path: sksurv
 
       - name: Set platform
         id: platform
@@ -42,7 +37,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.4.0
         env:
-          CIBW_BEFORE_BUILD: cd sksurv
           CIBW_ARCHS: auto64
           CIBW_BUILD: cp${{ matrix.python }}-${{ steps.platform.outputs.build_platform }}*
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
